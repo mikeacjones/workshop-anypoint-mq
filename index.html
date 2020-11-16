@@ -125,11 +125,27 @@
 <p>Once in the text editor, delete the existing text and copy and paste the following snippet into the body. </p>
 <pre><code>#%RAML 1.0
 title: notification-sapi
-description: Asynchronous API for pushing notifications out. Notifications are consumed by Anypoint MQ
+description: Asyncronous API for pushing notifications out. Notifications are consumed by Anypint MQ
 
 types:
- Notification: !include data-types/notification.raml
-
+ Notification:
+   type: object
+   properties:
+     id?:
+       type: string
+     priority:
+       enum:
+         - High
+         - Standard
+         - Log
+     groupId: string | number
+     message: string
+     status?:
+       enum:
+         - pending
+         - complete
+         - failed
+        
 /notification:
  get:
    description: Returns a list of notifications
@@ -157,7 +173,7 @@ types:
                priority: Log
                groupId: 0
  post:
-   description: Create a new notification
+   description: Create a new noitification
    body:
      application/json:
        type: Notification
