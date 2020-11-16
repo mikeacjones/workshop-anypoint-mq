@@ -123,71 +123,73 @@
 <p>Now that we have seen the visual editor, we will move to the code editor to finish the specification. Select &#34;Edit RAML&#34; on the upper right side. When the pop-up appears, select &#34;Yes, send me to the text editor&#34; and &#34;Continue&#34;</p>
 <p class="image-container"><img style="width: 624.00px" src="img/d3e7c4c3f540899c.png"></p>
 <p>Once in the text editor, delete the existing text and copy and paste the following snippet into the body. </p>
-<p><code>#%RAML 1.0</code></p>
-<p><code>title: notification-sapi</code></p>
-<p><code>description: Asynchronous API for pushing notifications out. Notifications are consumed by Anypoint MQ</code></p>
-<p><code>types:</code></p>
-<p><code> Notification: !include data-types/notification.raml</code></p>
-<p><code>/notification:</code></p>
-<p><code> get:</code></p>
-<p><code>   description: Returns a list of notifications</code></p>
-<p><code>   queryParameters:</code></p>
-<p><code>     status:</code></p>
-<p><code>       description: Filter by status</code></p>
-<p><code>       type: string</code></p>
-<p><code>       required: false</code></p>
-<p><code>   responses:</code></p>
-<p><code>     200:</code></p>
-<p><code>       body:</code></p>
-<p><code>         application/json:</code></p>
-<p><code>           type: Notification[]</code></p>
-<p><code>           example:</code></p>
-<p><code>             -</code></p>
-<p><code>               id: 5f7486a192ea33fe3e2f08b9</code></p>
-<p><code>               status: pending</code></p>
-<p><code>               message: This is a sample notification</code></p>
-<p><code>               priority: High</code></p>
-<p><code>               groupId: 1</code></p>
-<p><code>             -</code></p>
-<p><code>               id: 5f74939b92ea33fe3e2f08c6</code></p>
-<p><code>               status: complete</code></p>
-<p><code>               message: This is a sample notification</code></p>
-<p><code>               priority: Log</code></p>
-<p><code>               groupId: 0</code></p>
-<p><code> post:</code></p>
-<p><code>   description: Create a new notification</code></p>
-<p><code>   body:</code></p>
-<p><code>     application/json:</code></p>
-<p><code>       type: Notification</code></p>
-<p><code>       example:</code></p>
-<p><code>         message: This is a test notification</code></p>
-<p><code>         priority: Standard</code></p>
-<p><code>         groupId: 1</code></p>
-<p><code>   responses:</code></p>
-<p><code>     204:</code></p>
-<p><code>       description: Notification has been created</code></p>
-<p><code>       body:</code></p>
-<p><code>         application/json:</code></p>
-<p><code>           example: {</code></p>
-<p><code>             &#34;id&#34;: &#34;5f7486a192ea33fe3e2f08b9&#34;,</code></p>
-<p><code>             &#34;status&#34;: &#34;pending&#34;</code></p>
-<p><code>           }</code></p>
-<p><code> /{id}:</code></p>
-<p><code>   get:</code></p>
-<p><code>     description: Returns the status of the notification</code></p>
-<p><code>     queryParameters:</code></p>
-<p><code>       details:</code></p>
-<p><code>         description: By default, only the status of the notification is returned. For complete information, include ?details=true</code></p>
-<p><code>         type: boolean</code></p>
-<p><code>         required: false</code></p>
-<p><code>         default: false</code></p>
-<p><code>     responses:</code></p>
-<p><code>       200:</code></p>
-<p><code>         body:</code></p>
-<p><code>           application/json:</code></p>
-<p><code>             example: { &#34;status&#34;: &#34;pending&#34; }</code></p>
-<p><code>       404:</code></p>
-<p><code>         description: Notification does not exist</code></p>
+<pre><code>#%RAML 1.0
+title: notification-sapi
+description: Asynchronous API for pushing notifications out. Notifications are consumed by Anypoint MQ
+
+types:
+ Notification: !include data-types/notification.raml
+
+/notification:
+ get:
+   description: Returns a list of notifications
+   queryParameters:
+     status:
+       description: Filter by status
+       type: string
+       required: false
+   responses:
+     200:
+       body:
+         application/json:
+           type: Notification[]
+           example:
+             -
+               id: 5f7486a192ea33fe3e2f08b9
+               status: pending
+               message: This is a sample notification
+               priority: High
+               groupId: 1
+             -
+               id: 5f74939b92ea33fe3e2f08c6
+               status: complete
+               message: This is a sample notification
+               priority: Log
+               groupId: 0
+ post:
+   description: Create a new notification
+   body:
+     application/json:
+       type: Notification
+       example:
+         message: This is a test notification
+         priority: Standard
+         groupId: 1
+   responses:
+     204:
+       description: Notification has been created
+       body:
+         application/json:
+           example: {
+             &#34;id&#34;: &#34;5f7486a192ea33fe3e2f08b9&#34;,
+             &#34;status&#34;: &#34;pending&#34;
+           }
+ /{id}:
+   get:
+     description: Returns the status of the notification
+     queryParameters:
+       details:
+         description: By default, only the status of the notification is returned. For complete information, include ?details=true
+         type: boolean
+         required: false
+         default: false
+     responses:
+       200:
+         body:
+           application/json:
+             example: { &#34;status&#34;: &#34;pending&#34; }
+       404:
+         description: Notification does not exist</code></pre>
 <p class="image-container"><img style="width: 624.00px" src="img/14086b66b4892ee3.png"></p>
 <p>Use the Mocking Service by toggling the switch on the upper right hand corner. Then select &#34;Try It.&#34; This creates a live endpoint where a developer can understand the behavior of the API prior to implementing.</p>
 <p class="image-container"><img style="width: 624.00px" src="img/53ac2187c6d7d113.png"></p>
